@@ -1,9 +1,9 @@
-// 
+//
 // Created on February 12th 2021 by loanselot1.
-// 
+//
 // Purpose: Main window hanlder of the SDK, this class allows us to switch
 //          between different window libraries and handles callbacks.
-// 
+//
 
 #pragma once
 
@@ -12,7 +12,10 @@
 using DrawCallback_t = std::function<void(float)>;
 using DrawInitCallback_t = std::function<void()>;
 
-enum eWindowFlags { NONE, FULLSCREEN = 1 << 0 };
+enum eWindowFlags {
+    NONE,
+    FULLSCREEN = 1 << 0,
+};
 
 class Window {
 public:

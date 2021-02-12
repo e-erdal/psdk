@@ -15,7 +15,7 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
 
 #if PLATFORM_WINDOWS
 #if CURRENT_API_OPENGL
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 #else
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #endif
@@ -27,8 +27,10 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
     glfwMakeContextCurrent(m_handle);
 #endif
     m_handle = glfwCreateWindow(width, height, title, monitor, nullptr);
-    if (!m_handle)
+    if (!m_handle) {
         LOG_ERROR("Failed to create GLFW window!");
+        return;
+    }
 
     DEBUG_LOG_INFO("Successfully created window. (w: %d, h: %d)", width, height);
     LOG_INFO("View (%d, %d)", width, height);
@@ -37,37 +39,18 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
     glfwSetKeyCallback(m_handle, &Window::KeyCallback);
     glfwSetMouseButtonCallback(m_handle, &Window::MouseKeyCallback);
 
-    bgfx::PlatformData platformData;
-#if PLATFORM_WINDOWS
-    platformData.nwh = glfwGetWin32Window(m_handle);
-#elif PLATFORM_ANDROID
-    platformData.nwh = glfwGetAndroidApp(m_handle)->window;
-    platformData.ndt = 0;
-    eglDestroySurface(eglGetDisplay(EGL_DEFAULT_DISPLAY), glfwGetEGLSurface(m_handle));
-#endif
-    bgfx::Init bgfxInit;
-    bgfxInit.debug = false;
-    bgfxInit.type = bgfx::RendererType::Count;
-    bgfxInit.platformData = platformData;
-    bgfxInit.resolution.width = m_width;
-    bgfxInit.resolution.height = m_height;
-    bgfxInit.resolution.reset = BGFX_RESET_NONE;
-    if (!bgfx::init(bgfxInit))
-        LOG_ERROR("Failed to initialize BGFX!");
-
-    DEBUG_LOG_INFO("Successfully initialized BGFX.");
-    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x000000FF, 1.0f, 0);
-    bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
+    if (!RendererAPI::Initialize()) {
+        LOG_ERROR("Something incredibly bad happen! We can't initialize renderer api?");
+        return;
+    }
 }
 
 Window::~Window() {
-    bgfx::shutdown();
     glfwDestroyWindow(m_handle);
     glfwTerminate();
 }
 
 void Window::Poll() {
-    DH_PROFILE_FUNCTION();
     glfwSwapBuffers(m_handle);
     glfwPollEvents();
 }
@@ -81,18 +64,13 @@ void Window::ResizeWindow(GLFWwindow *handle, int width, int height) {
     ptr->m_width = (uint32_t)width;
     ptr->m_height = (uint32_t)height;
 
-    CameraSystem::GetActiveCamera(GetActiveScene()).SetScaleCamera({ width, height });
-
-    bgfx::reset(ptr->m_width, ptr->m_height, BGFX_RESET_NONE);
-    bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
+    RendererAPI::ResetView(width, height);
 }
 
 void Window::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    inputpipeline::ProcessKeyboard(key, scancode, action, mods);
 }
 
 void Window::MouseKeyCallback(GLFWwindow *window, int button, int action, int mods) {
-    inputpipeline::ProcessMouse(button, action, mods);
 }
 
 void Window::SetDrawCallback(DrawCallback_t callback) {

@@ -19,4 +19,9 @@
 class RendererAPI {
 public:
     static bool Initialize();
+
+    // rendering functions
+
+    // viewport functions
+    static void ResetView(int32_t width, int32_t height);
 };

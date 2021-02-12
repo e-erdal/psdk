@@ -9,8 +9,13 @@
 
 // Disable clang format so we can align includes like what we want
 // clang-format off
-#include "platform.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <stdint.h>
 
-// clang-format off
+#include "platform.h"
+
+#include "renderer/RendererAPI.h"
+
+#include <GLFW/glfw3.h>
+// clang-format on
+
+#include "logger/Logger.h"
