@@ -15,17 +15,25 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
 
 #if PLATFORM_WINDOWS
 #if CURRENT_API_OPENGL
+    // tell glfw that we are going to use raw OpenGL
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // this is what sdk's gl loader supports
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwMakeContextCurrent(m_handle);
 #else
+    // tell glfw that we are going to use abstraction lib (BGFX), so not really need to select api
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #endif
 #elif PLATFORM_ANDROID
+    // tell glfw that we are going to use raw OpenGL ES
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
     glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2); // can we handle ES 3? I have no idea, are they that different doe
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwMakeContextCurrent(m_handle);
 #endif
+
     m_handle = glfwCreateWindow(width, height, title, monitor, nullptr);
     if (!m_handle) {
         LOG_ERROR("Failed to create GLFW window!");
@@ -39,10 +47,12 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
     glfwSetKeyCallback(m_handle, &Window::KeyCallback);
     glfwSetMouseButtonCallback(m_handle, &Window::MouseKeyCallback);
 
-    if (!RendererAPI::Initialize()) {
-        LOG_ERROR("Something incredibly bad happen! We can't initialize renderer api?");
-        return;
-    }
+    // DONT DO THIS DONT DO THIS DONT DO THIS DONT DO THIS DONT DO THIS DONT DO THIS
+    // this class is not even constructed yet and requiring a valid object to initliaze? dumb
+    // if (!RendererAPI::Initialize(this)) {
+    //     LOG_ERROR("Something incredibly bad happen! We can't initialize renderer api?");
+    //     return;
+    // }
 }
 
 Window::~Window() {

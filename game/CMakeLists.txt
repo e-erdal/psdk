@@ -10,5 +10,5 @@ include_directories(
 
 target_link_libraries(game
     PUBLIC
-        shared
+        sdk
 )

@@ -1,3 +1,10 @@
+// 
+// Created on February 12th 2021 by loanselot1.
+// 
+// Purpose: Helper functions to read and write memory cleaner.
+//          This is actually implemented by ness back in 2019?
+// 
+
 #pragma once
 
 #include <cstdint>

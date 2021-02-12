@@ -6,6 +6,8 @@
 //          This also lets us to use one function for every api, basically little abstraction
 //
 
+#pragma once
+
 #define CURRENT_API_OPENGL 1
 #define CURRENT_API_BGFX 0
 
@@ -14,14 +16,16 @@
 #elif CURRENT_API_BGFX
 #endif
 
-#pragma once
-
+class Window; // no clue if this is good or not, i hope i wont get linker shit while dealing this this
 class RendererAPI {
 public:
-    static bool Initialize();
+    static bool Initialize(Window *wapi);
 
     // rendering functions
+    static void DrawArrays();
 
     // viewport functions
     static void ResetView(int32_t width, int32_t height);
+
+private:
 };
