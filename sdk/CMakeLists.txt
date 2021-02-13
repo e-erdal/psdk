@@ -17,4 +17,5 @@ target_link_libraries(sdk
         glad
         glfw
         glm
+        lw
 )
