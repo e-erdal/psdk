@@ -18,7 +18,7 @@ App::~App() {
 
 void App::Run() {
     while (!m_window->ShouldClose()) {
-        RendererAPI::Clear(255, 0, 0, 255);
+        RendererAPI::Clear(0, 0, 0, 255);
         m_window->Poll();
     }
 }
