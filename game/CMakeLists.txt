@@ -1,6 +1,6 @@
 file(GLOB_RECURSE source src/*.cpp)
 
-add_executable(game
+add_executable(game WIN32
     ${source}
 )
 

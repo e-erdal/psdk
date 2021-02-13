@@ -16,11 +16,9 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
 #if PLATFORM_WINDOWS
 #if CURRENT_API_OPENGL
     // tell glfw that we are going to use raw OpenGL
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // this is what sdk's gl loader supports
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
-    glfwMakeContextCurrent(m_handle);
 #else
     // tell glfw that we are going to use abstraction lib (BGFX), so not really need to select api
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -39,6 +37,13 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
         LOG_ERROR("Failed to create GLFW window!");
         return;
     }
+
+    glfwMakeContextCurrent(m_handle);
+
+    if (flags & VSYNC)
+        glfwSwapInterval(1);
+    else
+        glfwSwapInterval(0);
 
     DEBUG_LOG_INFO("Successfully created window. (w: %d, h: %d)", width, height);
     LOG_INFO("View (%d, %d)", width, height);

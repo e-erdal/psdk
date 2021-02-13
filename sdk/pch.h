@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#include "platform.h"
+#include "Platform.h"
 #include "graphics/RendererAPI.h"
 
 #include <GLFW/glfw3.h>

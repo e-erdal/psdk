@@ -94,3 +94,21 @@
     #define PLATFORM_HAIKU 1
 #endif
 // clang-format on
+
+// ENTRY POINT CONFIG
+#define CONSOLEAPP 0
+#define ENTRY_POINT_TYPE int
+#define ENTRY_POINT_NAME main
+#define ENTRY_POINT_ARGS
+
+#if PLATFORM_WINDOWS
+#include <Windows.h>
+#undef ENTRY_POINT_NAME
+#undef ENTRY_POINT_ARGS
+
+#define ENTRY_POINT_NAME WINAPI wWinMain
+#define ENTRY_POINT_ARGS HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow
+#endif
+
+#define ENTRY_POINT ENTRY_POINT_TYPE ENTRY_POINT_NAME(ENTRY_POINT_ARGS)
+/////////////////////////////

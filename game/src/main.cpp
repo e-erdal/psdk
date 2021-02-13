@@ -2,20 +2,22 @@
 // Created on February 11th 2021 by loanselot1.
 //
 
-#include "variant/VariantList.h"
-#include "variant/VariantDB.h"
+#include "pch.h"
 
-void OnUpdate(VariantList *v) {
-    
+#include "app/App.h"
+
+ENTRY_POINT {
+    AppInfo cfg;
+    cfg.appName = "BareSDK";
+    cfg.verMaj = 1;
+    cfg.verMin = 0;
+    cfg.verBuild = 0;
+
+    cfg.title = "Game";
+    cfg.windowRes = { 1024, 768 };
+    cfg.windowFlags = eWindowFlags::NONE;
+
+    App *app = new App(cfg);
+    app->Run();
+    delete app;
 }
-
-int main() {
-    VariantDB db;
-
-    db.GetFunction("OnUpdate")->Bind(OnUpdate);
-
-    VariantList v;
-    v[0] = 1i8;
-
-    db.GetFunction("OnUpdate")->fun(&v);
-}  

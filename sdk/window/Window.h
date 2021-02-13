@@ -15,6 +15,7 @@ using DrawInitCallback_t = std::function<void()>;
 enum eWindowFlags {
     NONE,
     FULLSCREEN = 1 << 0,
+    VSYNC = 1 << 1,
 };
 
 class Window {
