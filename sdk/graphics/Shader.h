@@ -34,10 +34,26 @@ private:
     int FindUnifrom(const std::string &name);
 
     std::unordered_map<GLenum, std::string> Parse(const std::string &source);
-    
+
     void Compile(const std::unordered_map<GLenum, std::string> &shaderSources);
 
 private:
     uint32_t m_idx;
     std::string m_name;
+};
+
+class ShaderManager {
+public:
+    void Add(const std::string &name, Shader *shader);
+    void Add(Shader *shader);
+    
+    Shader *Load(const std::string &path);
+    Shader *Load(const std::string &name, const std::string &path);
+
+    Shader *Get(const std::string &name);
+
+    bool Exists(const std::string &name) const;
+
+private:
+    std::unordered_map<std::string, Shader *> m_Shaders;
 };

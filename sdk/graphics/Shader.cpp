@@ -162,3 +162,36 @@ void Shader::Compile(const std::unordered_map<GLenum, std::string> &shaderSource
         glDeleteShader(id);
     }
 }
+
+void ShaderManager::Add(const std::string &name, Shader *shader) {
+    if (!Exists(name))
+        m_Shaders[name] = shader;
+}
+
+void ShaderManager::Add(Shader *shader) {
+    auto &name = shader->GetName();
+    Add(name, shader);
+}
+
+Shader *ShaderManager::Load(const std::string &path) {
+    auto shader = new Shader(path);
+    Add(shader);
+    return shader;
+}
+
+Shader *ShaderManager::Load(const std::string &name, const std::string &path) {
+    auto shader = new Shader(path);
+    Add(name, shader);
+    return shader;
+}
+
+Shader *ShaderManager::Get(const std::string &name) {
+    if (Exists(name))
+        return m_Shaders[name];
+    else
+        return 0;
+}
+
+bool ShaderManager::Exists(const std::string &name) const {
+    return m_Shaders.find(name) != m_Shaders.end();
+}
