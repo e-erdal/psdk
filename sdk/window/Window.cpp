@@ -1,7 +1,7 @@
 #include "Window.h"
 
 #include "Platform.h"
-#include "renderer/RendererAPI.h"
+#include "graphics/RendererAPI.h"
 
 Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags flags) : m_width(width), m_height(height) {
     if (!glfwInit()) {
@@ -19,7 +19,7 @@ Window::Window(uint32_t width, uint32_t height, const char *title, eWindowFlags 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // this is what sdk's gl loader supports
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
     glfwMakeContextCurrent(m_handle);
 #else
     // tell glfw that we are going to use abstraction lib (BGFX), so not really need to select api

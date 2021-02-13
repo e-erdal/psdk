@@ -7,15 +7,20 @@
 
 #pragma once
 
+#define _CRT_SECURE_NO_WARNINGS
+
 // Disable clang format so we can align includes like what we want
 // clang-format off
 #include <stdint.h>
+#include <string>
+#include <vector>
 
 #include "platform.h"
-
-#include "renderer/RendererAPI.h"
+#include "graphics/RendererAPI.h"
 
 #include <GLFW/glfw3.h>
 // clang-format on
 
 #include "logger/Logger.h"
+
+#include <glm/glm.hpp>

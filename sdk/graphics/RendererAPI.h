@@ -17,15 +17,12 @@
 #endif
 
 class Window; // no clue if this is good or not, i hope i wont get linker shit while dealing this this
-class RendererAPI {
-public:
-    static bool Initialize(Window *wapi);
+namespace RendererAPI {
+    bool Initialize(Window *wapi);
+    void InitializeSettings();
 
-    // rendering functions
-    static void DrawArrays();
+    void DrawIndexed(uint32_t count);
 
-    // viewport functions
-    static void ResetView(int32_t width, int32_t height);
-
-private:
-};
+    void Clear(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+    void ResetView(int32_t width, int32_t height);
+} // namespace RendererAPI
