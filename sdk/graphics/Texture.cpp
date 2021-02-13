@@ -2,12 +2,21 @@
 
 #include <stb_image.h>
 
+static void ApplyTextureFilter(uint32_t id, bool AA) {
+    if (AA) {
+        glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    } else {
+        glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    }
+}
+
 Texture::Texture(uint32_t width, uint32_t height, bool AA) : m_width(width), m_height(height) {
     glCreateTextures(GL_TEXTURE_2D, 1, &m_idx);
     glTextureStorage2D(m_idx, 1, GL_RGBA8, m_width, m_height);
 
-    glTextureParameteri(m_idx, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTextureParameteri(m_idx, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    ApplyTextureFilter(m_idx, AA);
 
     glTextureParameteri(m_idx, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTextureParameteri(m_idx, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -38,9 +47,8 @@ Texture::Texture(const std::string &path, bool AA) {
 
     glCreateTextures(GL_TEXTURE_2D, 1, &m_idx);
     glTextureStorage2D(m_idx, 1, internalFormat, m_width, m_height);
-
-    glTextureParameteri(m_idx, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTextureParameteri(m_idx, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    
+    ApplyTextureFilter(m_idx, AA);
 
     glTextureParameteri(m_idx, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTextureParameteri(m_idx, GL_TEXTURE_WRAP_T, GL_REPEAT);

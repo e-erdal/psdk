@@ -16,7 +16,7 @@
 #elif CURRENT_API_BGFX
 #endif
 
-class Window; // no clue if this is good or not, i hope i wont get linker shit while dealing this this
+class Window; // no clue if this is good or not, i hope i wont get linker shit while dealing with this
 namespace RendererAPI {
     bool Initialize(Window *wapi);
     void InitializeSettings();
