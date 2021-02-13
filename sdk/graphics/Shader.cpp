@@ -21,10 +21,15 @@ Shader::Shader(const std::string &path) {
     m_name = FileSystem::GetFileName(path);
 }
 
-Shader::Shader(const std::string &name, const std::string &vertexSrc, const std::string &fragmentSrc) {
+Shader::Shader(const std::string &name, const std::string &vertexSrc, const std::string &fragmentSrc) : m_name(name) {
+    std::unordered_map<GLenum, std::string> sources;
+    sources[GL_VERTEX_SHADER] = vertexSrc;
+    sources[GL_FRAGMENT_SHADER] = fragmentSrc;
+    Compile(sources);
 }
 
 Shader::~Shader() {
+    glDeleteProgram(m_idx);
 }
 
 void Shader::Bind() {
