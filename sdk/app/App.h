@@ -8,6 +8,8 @@
 
 #include "pch.h"
 
+#include "graphics/ShaderManager.h"
+
 #include "window/Window.h"
 
 struct AppInfo {
@@ -26,11 +28,20 @@ public:
     App(const AppInfo &info);
     virtual ~App();
 
+    void Close();
+
+public:
     static App *Get() {
         return g_instance;
     }
 
-    void Close();
+    Window *GetWindow() {
+        return m_window;
+    }
+
+    ShaderManager *GetShaderManager() {
+        return m_shaderMan;
+    }
 
 private:
     void Run();
@@ -38,9 +49,14 @@ private:
 private:
     Window *m_window;
 
+    ShaderManager *m_shaderMan;
+
     float m_lastDelta = 0.f;
 
 private:
     static App *g_instance;
     friend ENTRY_POINT;
 };
+
+extern Window *GetWindow();
+extern ShaderManager *GetShaderManager();

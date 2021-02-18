@@ -12,3 +12,5 @@ target_link_libraries(game
     PUBLIC
         sdk
 )
+
+install(TARGETS game DESTINATION bin/${CMAKE_BUILD_TYPE})

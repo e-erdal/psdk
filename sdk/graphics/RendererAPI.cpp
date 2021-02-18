@@ -1,5 +1,7 @@
 #include "RendererAPI.h"
 
+#include "app/App.h"
+
 #include "window/Window.h"
 
 bool RendererAPI::Initialize(Window *wapi) {
@@ -15,28 +17,38 @@ bool RendererAPI::Initialize(Window *wapi) {
 }
 
 void RendererAPI::InitializeSettings() {
-#if CURRENT_API_OPENGL
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_DEPTH_TEST);
+    bgfx::PlatformData platformData;
+#if PLATFORM_WINDOWS
+    platformData.nwh = glfwGetWin32Window(GetWindow()->GetHandle());
+#elif PLATFORM_ANDROID
+    platformData.nwh = glfwGetAndroidApp(m_handle)->window;
+    platformData.ndt = 0;
+    eglDestroySurface(eglGetDisplay(EGL_DEFAULT_DISPLAY), glfwGetEGLSurface(m_handle));
 #endif
-}
+    bgfx::Init init;
+    init.debug = false;
+    init.type = bgfx::RendererType::Count;
+    init.platformData = platformData;
+    init.resolution.width = GetWindow()->Width();
+    init.resolution.height = GetWindow()->Height();
+    init.resolution.reset = BGFX_RESET_NONE;
+    init.limits.transientVbSize = g_MaxVBCount;
 
-void RendererAPI::DrawIndexed(uint32_t count) {
-#if CURRENT_API_OPENGL
-    glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
-#endif
+    if (!bgfx::init(init)) {
+        LOG_ERROR("Failed to initialize BGFX!");
+        return;
+    }
+
+    DEBUG_LOG_INFO("Successfully initialized BGFX.");
+    Clear(0, 0, 0, 255);
+    bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
 }
 
 void RendererAPI::Clear(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-#if CURRENT_API_OPENGL
-    glClearColor((float)r / 255.f, (float)g / 255.f, (float)g / 255.f, (float)a / 255.f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-#endif
+    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, MAKE_RGBA(r, g, b, a), 1.0f, 0);
 }
 
 void RendererAPI::ResetView(int32_t width, int32_t height) {
-#if CURRENT_API_OPENGL
-    glViewport(0, 0, width, height);
-#endif
+    bgfx::reset(GetWindow()->Width(), GetWindow()->Height(), BGFX_RESET_NONE);
+    bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
 }

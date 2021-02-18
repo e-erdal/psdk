@@ -8,6 +8,8 @@ App::App(const AppInfo &info) {
     g_instance = this;
 
     m_window = new Window(info.windowRes.x, info.windowRes.y, info.title, info.windowFlags);
+    m_shaderMan = new ShaderManager();
+    m_shaderMan->InitializeSpriteShaders();
 
     RendererAPI::Initialize(m_window);
 }
@@ -18,7 +20,17 @@ App::~App() {
 
 void App::Run() {
     while (!m_window->ShouldClose()) {
-        RendererAPI::Clear(0, 0, 0, 255);
+        bgfx::touch(0);
         m_window->Poll();
+        bgfx::frame();
     }
+}
+
+// externals //////////////////
+Window *GetWindow() {
+    return App::Get()->GetWindow();
+}
+
+ShaderManager *GetShaderManager() {
+    return App::Get()->GetShaderManager();
 }

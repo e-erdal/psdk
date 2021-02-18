@@ -2,24 +2,15 @@
 
 #include <stb_image.h>
 
-static void ApplyTextureFilter(uint32_t id, bool AA) {
-    if (AA) {
-        glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    } else {
-        glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    }
+static uint32_t ApplyTextureFilter(bool AA) {
+    return AA ? (BGFX_SAMPLER_NONE) : (BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT);
 }
 
 Texture::Texture(uint32_t width, uint32_t height, bool AA) : m_width(width), m_height(height) {
-    glCreateTextures(GL_TEXTURE_2D, 1, &m_idx);
-    glTextureStorage2D(m_idx, 1, GL_RGBA8, m_width, m_height);
+    m_handle = bgfx::createTexture2D((uint16_t)width, (uint16_t)height, false, 1, bgfx::TextureFormat::RGBA8, ApplyTextureFilter(AA), nullptr);
 
-    ApplyTextureFilter(m_idx, AA);
-
-    glTextureParameteri(m_idx, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTextureParameteri(m_idx, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    if (!bgfx::isValid(m_handle))
+        DEBUG_LOG_ERROR("Texture is invalid!");
 }
 
 Texture::Texture(const std::string &path, bool AA) {
@@ -45,27 +36,20 @@ Texture::Texture(const std::string &path, bool AA) {
         dataFormat = GL_RGB;
     }
 
-    glCreateTextures(GL_TEXTURE_2D, 1, &m_idx);
-    glTextureStorage2D(m_idx, 1, internalFormat, m_width, m_height);
-    
-    ApplyTextureFilter(m_idx, AA);
+    auto memory = bgfx::copy(data, (width * height) * channels);
+    m_handle = bgfx::createTexture2D((uint16_t)width, (uint16_t)height, false, 1, bgfx::TextureFormat::RGBA8, ApplyTextureFilter(AA), memory);
 
-    glTextureParameteri(m_idx, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTextureParameteri(m_idx, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-    glTextureSubImage2D(m_idx, 0, 0, 0, m_width, m_height, dataFormat, GL_UNSIGNED_BYTE, data);
+    if (!bgfx::isValid(m_handle))
+        DEBUG_LOG_ERROR("Texture is invalid!");
 
     stbi_image_free(data);
 }
 
 Texture::~Texture() {
-    glDeleteTextures(1, &m_idx);
+    bgfx::destroy(m_handle);
 }
 
-void Texture::SetData(void *data, uint32_t size, uint8_t pitch) {
-    glTextureSubImage2D(m_idx, 0, 0, 0, m_width, m_height, pitch, GL_UNSIGNED_BYTE, data);
-}
-
-void Texture::Bind(uint32_t slot) const {
-    glBindTextureUnit(slot, m_idx);
+void Texture::Update(void *data, uint32_t size, uint8_t pitch) {
+    auto memory = bgfx::copy(data, size);
+    bgfx::updateTexture2D(m_handle, 0, 0, 0, 0, (uint16_t)m_width, (uint16_t)m_height, memory, (uint16_t)pitch * (uint16_t)m_width);
 }

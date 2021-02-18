@@ -23,21 +23,17 @@ public:
         return m_height;
     }
 
-    uint32_t GetID() const {
-        return m_idx;
+    bgfx::TextureHandle &GetHandle() {
+        return m_handle;
     }
 
-    // TODO: make "GetHandle" for BGFX texture.
-
-    void SetData(void *data, uint32_t size, uint8_t pitch = 4);
-
-    void Bind(uint32_t slot = 0) const;
+    void Update(void *data, uint32_t size, uint8_t pitch = 4);
 
     bool operator==(const Texture &other) const {
-        return m_idx == ((Texture &)other).m_idx;
+        return m_handle.idx == ((Texture &)other).m_handle.idx;
     }
 
 private:
     uint32_t m_width, m_height;
-    uint32_t m_idx;
+    bgfx::TextureHandle m_handle = BGFX_INVALID_HANDLE;
 };

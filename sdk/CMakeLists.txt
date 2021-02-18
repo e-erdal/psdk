@@ -14,7 +14,7 @@ target_include_directories(sdk PUBLIC .)
 
 target_link_libraries(sdk
     PUBLIC
-        glad
+        bgfx
         glfw
         glm
         lw
