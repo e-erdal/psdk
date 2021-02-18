@@ -34,5 +34,5 @@ private:
     glm::mat4 m_projMatrix;
     glm::mat4 m_VPM;
 
-    float m_rotation;
+    float m_rotation = 0;
 };

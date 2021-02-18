@@ -51,4 +51,6 @@ void RendererAPI::Clear(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
 void RendererAPI::ResetView(int32_t width, int32_t height) {
     bgfx::reset(GetWindow()->Width(), GetWindow()->Height(), BGFX_RESET_NONE);
     bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
+    GetCamera()->GetScale() = { GetWindow()->Width(), GetWindow()->Height() };
+    GetCamera()->CalculateTransformation();
 }

@@ -9,6 +9,7 @@
 #include "pch.h"
 
 #include "graphics/ShaderManager.h"
+#include "graphics/camera/Camera.h"
 
 #include "window/Window.h"
 
@@ -43,6 +44,10 @@ public:
         return m_shaderMan;
     }
 
+    Camera *GetCamera() {
+        return m_camera;
+    }
+
 private:
     void Run();
 
@@ -50,6 +55,8 @@ private:
     Window *m_window;
 
     ShaderManager *m_shaderMan;
+
+    Camera *m_camera;
 
     float m_lastDelta = 0.f;
 
@@ -60,3 +67,4 @@ private:
 
 extern Window *GetWindow();
 extern ShaderManager *GetShaderManager();
+extern Camera *GetCamera();

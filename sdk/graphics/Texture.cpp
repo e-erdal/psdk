@@ -2,7 +2,7 @@
 
 #include <stb_image.h>
 
-static uint32_t ApplyTextureFilter(bool AA) {
+static uint64_t ApplyTextureFilter(bool AA) {
     return AA ? (BGFX_SAMPLER_NONE) : (BGFX_SAMPLER_MIN_POINT | BGFX_SAMPLER_MAG_POINT);
 }
 
@@ -26,15 +26,6 @@ Texture::Texture(const std::string &path, bool AA) {
 
     m_width = width;
     m_height = height;
-
-    GLenum internalFormat = 0, dataFormat = 0;
-    if (channels == 4) {
-        internalFormat = GL_RGBA8;
-        dataFormat = GL_RGBA;
-    } else if (channels == 3) {
-        internalFormat = GL_RGB8;
-        dataFormat = GL_RGB;
-    }
 
     auto memory = bgfx::copy(data, (width * height) * channels);
     m_handle = bgfx::createTexture2D((uint16_t)width, (uint16_t)height, false, 1, bgfx::TextureFormat::RGBA8, ApplyTextureFilter(AA), memory);

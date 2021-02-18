@@ -55,8 +55,8 @@ struct RenderBatcherData {
     bgfx::VertexLayout defaultLayout;
     bgfx::IndexBufferHandle ibh;
 
-    bgfx::UniformHandle defaultProgram;
-    bgfx::ProgramHandle defaultShader;
+    bgfx::UniformHandle defaultUniform;
+    bgfx::ProgramHandle defaultProgram;
 
     Texture *whiteTexture;
 
@@ -72,4 +72,8 @@ namespace RenderBatcher {
     void ResetBatch();
 
     void Submit(Texture *texture, const glm::mat4 &transform, const glm::mat4x2 &uvs, const glm::vec4 &color);
+
+    inline void DrawRectangle(const glm::mat4 &transform, const glm::vec4 &color = { 1, 1, 1, 1 }) {
+        Submit(0, transform, g_defCoords, color);
+    }
 } // namespace RenderBatcher
