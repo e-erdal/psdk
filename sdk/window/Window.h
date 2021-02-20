@@ -9,9 +9,6 @@
 
 #include <functional>
 
-using DrawCallback_t = std::function<void(float)>;
-using DrawInitCallback_t = std::function<void()>;
-
 enum eWindowFlags {
     NONE,
     FULLSCREEN = 1 << 0,
@@ -24,9 +21,6 @@ public:
     ~Window();
 
     void Poll();
-
-    void SetDrawCallback(DrawCallback_t callback);
-    void SetDrawInitCallback(DrawInitCallback_t callback);
 
     bool ShouldClose() const;
 
@@ -48,7 +42,5 @@ public:
 
 private:
     GLFWwindow *m_handle;
-    DrawCallback_t m_drawCallback = nullptr;
-    DrawInitCallback_t m_drawInitCallback = nullptr;
     uint32_t m_width, m_height = 0;
 };

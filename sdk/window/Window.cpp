@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include "app/App.h"
+
 #include "Platform.h"
 #include "graphics/RendererAPI.h"
 
@@ -83,15 +85,9 @@ void Window::ResizeWindow(GLFWwindow *handle, int width, int height) {
 }
 
 void Window::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    GetInputManager()->ProcessKeyboard(key, scancode, action, mods);
 }
 
 void Window::MouseKeyCallback(GLFWwindow *window, int button, int action, int mods) {
-}
-
-void Window::SetDrawCallback(DrawCallback_t callback) {
-    m_drawCallback = callback;
-}
-
-void Window::SetDrawInitCallback(DrawInitCallback_t callback) {
-    m_drawInitCallback = callback;
+    GetInputManager()->ProcessMouse(button, action, mods);
 }

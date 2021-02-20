@@ -11,6 +11,7 @@
 #include "graphics/ShaderManager.h"
 #include "graphics/camera/Camera.h"
 
+#include "manager/InputManager.h"
 #include "window/Window.h"
 
 struct AppInfo {
@@ -48,15 +49,18 @@ public:
         return m_camera;
     }
 
+    InputManager *GetInputManager() {
+        return m_inputMan;
+    }
+
 private:
     void Run();
 
 private:
     Window *m_window;
-
     ShaderManager *m_shaderMan;
-
     Camera *m_camera;
+    InputManager *m_inputMan;
 
     float m_lastDelta = 0.f;
 
@@ -68,3 +72,4 @@ private:
 extern Window *GetWindow();
 extern ShaderManager *GetShaderManager();
 extern Camera *GetCamera();
+extern InputManager *GetInputManager();

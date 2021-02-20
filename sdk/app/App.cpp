@@ -11,6 +11,7 @@ App::App(const AppInfo &info) {
     m_window = new Window(info.windowRes.x, info.windowRes.y, info.title, info.windowFlags);
     m_shaderMan = new ShaderManager();
     m_shaderMan->InitializeSpriteShaders();
+    m_inputMan = new (InputManager);
 
     RendererAPI::Initialize(m_window);
     RenderBatcher::Initialize();
@@ -61,4 +62,8 @@ ShaderManager *GetShaderManager() {
 
 Camera *GetCamera() {
     return App::Get()->GetCamera();
+}
+
+InputManager *GetInputManager() {
+    return App::Get()->GetInputManager();
 }

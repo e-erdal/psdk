@@ -101,6 +101,8 @@
 #define ENTRY_POINT_NAME main
 #define ENTRY_POINT_ARGS
 
+#if !CONSOLEAPP
+
 #if PLATFORM_WINDOWS
 #include <Windows.h>
 #undef ENTRY_POINT_NAME
@@ -111,4 +113,6 @@
 #endif
 
 #define ENTRY_POINT ENTRY_POINT_TYPE ENTRY_POINT_NAME(ENTRY_POINT_ARGS)
+
+#endif
 /////////////////////////////
