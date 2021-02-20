@@ -38,9 +38,9 @@ public:
     }
 
 private:
-    std::unordered_map<MouseCode, GLFWKeyState> m_mouseState;
-    std::unordered_map<KeyCode, GLFWKeyState> m_keyboardState;
-    GLFWKeyMods m_mods{};
+    std::unordered_map<MouseCode, KeyState> m_mouseState;
+    std::unordered_map<KeyCode, KeyState> m_keyboardState;
+    KeyMods m_mods{};
 
     glm::vec2 m_mousePos{};
     glm::vec2 m_mouseScrollAxis{};

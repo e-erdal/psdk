@@ -138,7 +138,7 @@ enum class GLFWKeys : KeyCode {
     Menu = 348
 };
 
-enum GLFWKeyMods : uint8_t {
+enum KeyMods : uint8_t {
     INPUT_KEY_MODS_NONE = 0,
     INPUT_KEY_MODS_SHIFT = 1 << 0,
     INPUT_KEY_MODS_CONTROL = 1 << 1,
@@ -148,13 +148,13 @@ enum GLFWKeyMods : uint8_t {
     INPUT_KEY_MODS_NUM_LOCK = 1 << 5,
 };
 
-enum class GLFWMouse : MouseCode {
-    LEFT,
-    RIGHT,
-    MIDDLE,
+enum Mouse : MouseCode {
+    INPUT_MOUSE_STATE_LEFT,
+    INPUT_MOUSE_STATE_RIGHT,
+    INPUT_MOUSE_STATE_MIDDLE,
 };
 
-enum class GLFWKeyState {
-    PRESSED,
-    RELEASED,
+enum KeyState {
+    INPUT_KEY_STATE_PRESSED,
+    INPUT_KEY_STATE_RELEASED,
 };
