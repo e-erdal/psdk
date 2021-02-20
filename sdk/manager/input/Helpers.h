@@ -155,6 +155,8 @@ enum Mouse : MouseCode {
 };
 
 enum KeyState {
+    INPUT_KEY_STATE_NONE,
     INPUT_KEY_STATE_PRESSED,
     INPUT_KEY_STATE_RELEASED,
+    INPUT_KEY_STATE_CLICKED,
 };

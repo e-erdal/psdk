@@ -24,6 +24,7 @@ public:
 
     bool IsMousePressed(MouseCode key);
     bool IsMouseReleased(MouseCode key);
+    bool IsMouseClicked(MouseCode key);
 
     void ProcessKeyboard(int key, int scancode, int action, int mods);
     void ProcessMouse(int button, int action, int mods);

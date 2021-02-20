@@ -12,6 +12,17 @@ void InputManager::Update() {
     double xpos, ypos;
     glfwGetCursorPos(GetWindow()->GetHandle(), &xpos, &ypos);
     m_mousePos = { (float)xpos, (float)ypos };
+
+    // loop over mouse first
+    for (auto &&i : m_mouseState) {
+        if (i.second == INPUT_KEY_STATE_RELEASED) {
+            i.second = INPUT_KEY_STATE_CLICKED;
+            continue;
+        }
+
+        if (i.second != INPUT_KEY_STATE_NONE && i.second != INPUT_KEY_STATE_PRESSED)
+            m_mouseState.insert_or_assign(i.first, INPUT_KEY_STATE_NONE);
+    }
 }
 
 bool InputManager::IsPressed(KeyCode key) {
@@ -28,6 +39,10 @@ bool InputManager::IsMousePressed(MouseCode key) {
 
 bool InputManager::IsMouseReleased(MouseCode key) {
     return (m_mouseState.find(key) != m_mouseState.end() && m_mouseState.at(key) == INPUT_KEY_STATE_RELEASED);
+}
+
+bool InputManager::IsMouseClicked(MouseCode key) {
+    return (m_mouseState.find(key) != m_mouseState.end() && m_mouseState.at(key) == INPUT_KEY_STATE_CLICKED);
 }
 
 void InputManager::ProcessKeyboard(int key, int scancode, int action, int mods) {

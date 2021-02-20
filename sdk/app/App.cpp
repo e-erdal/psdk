@@ -3,11 +3,14 @@
 #include "graphics/RenderBatcher.h"
 #include "graphics/RendererAPI.h"
 
+#include "manager/input/Helpers.h"
+
 App *App::g_instance = 0;
 
 App::App(const AppInfo &info) {
     g_instance = this;
 
+    logger::Clear();
     m_window = new Window(info.windowRes.x, info.windowRes.y, info.title, info.windowFlags);
     m_shaderMan = new ShaderManager();
     m_shaderMan->InitializeSpriteShaders();
@@ -48,6 +51,9 @@ void App::Run() {
             }
 
         bgfx::frame();
+        
+        // this shit has to stay on bottom, no matter what
+        m_inputMan->Update();
     }
 }
 
