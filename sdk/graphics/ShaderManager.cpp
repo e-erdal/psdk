@@ -56,43 +56,45 @@ bgfx::ProgramHandle ShaderManager::LoadProgram(const std::string &key) {
 #include "s/vs_default.vulkan.h"
 #endif
 
-void ShaderManager::InitializeSpriteShaders() {
-#if 1
+void ShaderManager::Add(const char *path, const char *name) {
     uint32_t readSize = 0;
-    uint8_t *data = FileSystem::ReadBinaryFile("data/shaders/default.shader", &readSize);
+    uint8_t *data = FileSystem::ReadBinaryFile(path, &readSize);
     uint8_t *ptr = data;
 
-    m_shaders.resize(m_shaders.size() + 12);
-
-    for (auto &&i : m_shaders) {
-        i.name = "Default";
+    for (size_t j = 0; j < 12; j++) {
+        Shader i{};
+        i.name = name;
         memory::Serialize(data, &i.type, 1);
         memory::Serialize(data, &i.renderer, 1);
         memory::Serialize(data, &i.code_len);
         i.code = (uint8_t *)malloc(i.code_len);
         memory::Serialize(data, i.code, i.code_len);
+        m_shaders.push_back(i);
     }
 
     data = ptr;
     free(data);
+}
 
+void ShaderManager::InitializeSpriteShaders() {
+#if 1
+    Add("data/shaders/default.shader", "Default");
 #else
 
     // clang-format off
-    Add("Default", bgfx::RendererType::Direct3D9,   eShaderType::Fragment,  (uint8_t *)fs_default_d3d9,      sizeof(fs_default_d3d9));
-    Add("Default", bgfx::RendererType::Direct3D11,  eShaderType::Fragment,  (uint8_t *)fs_default_d3d11,     sizeof(fs_default_d3d11));
-    Add("Default", bgfx::RendererType::Direct3D12,  eShaderType::Fragment,  (uint8_t *)fs_default_d3d12,     sizeof(fs_default_d3d12));
-    Add("Default", bgfx::RendererType::OpenGL,      eShaderType::Fragment,  (uint8_t *)fs_default_glsl,      sizeof(fs_default_glsl));
-    Add("Default", bgfx::RendererType::Metal,       eShaderType::Fragment,  (uint8_t *)fs_default_metal,     sizeof(fs_default_metal));
-    Add("Default", bgfx::RendererType::Vulkan,      eShaderType::Fragment,  (uint8_t *)fs_default_vulkan,    sizeof(fs_default_vulkan));
+    Add(SHADER_NAME, bgfx::RendererType::Direct3D9,   eShaderType::Fragment,  (uint8_t *)fs_gaussian_blur_hz_d3d9,      sizeof(fs_gaussian_blur_hz_d3d9));
+    Add(SHADER_NAME, bgfx::RendererType::Direct3D11,  eShaderType::Fragment,  (uint8_t *)fs_gaussian_blur_hz_d3d11,     sizeof(fs_gaussian_blur_hz_d3d11));
+    Add(SHADER_NAME, bgfx::RendererType::Direct3D12,  eShaderType::Fragment,  (uint8_t *)fs_gaussian_blur_hz_d3d12,     sizeof(fs_gaussian_blur_hz_d3d12));
+    Add(SHADER_NAME, bgfx::RendererType::OpenGL,      eShaderType::Fragment,  (uint8_t *)fs_gaussian_blur_hz_glsl,      sizeof(fs_gaussian_blur_hz_glsl));
+    Add(SHADER_NAME, bgfx::RendererType::Metal,       eShaderType::Fragment,  (uint8_t *)fs_gaussian_blur_hz_metal,     sizeof(fs_gaussian_blur_hz_metal));
+    Add(SHADER_NAME, bgfx::RendererType::Vulkan,      eShaderType::Fragment,  (uint8_t *)fs_gaussian_blur_hz_vulkan,    sizeof(fs_gaussian_blur_hz_vulkan));
 
-    Add("Default", bgfx::RendererType::Direct3D9,   eShaderType::Vertex,    (uint8_t *)vs_default_d3d9,      sizeof(vs_default_d3d9));
-    Add("Default", bgfx::RendererType::Direct3D11,  eShaderType::Vertex,    (uint8_t *)vs_default_d3d11,     sizeof(vs_default_d3d11));
-    Add("Default", bgfx::RendererType::Direct3D12,  eShaderType::Vertex,    (uint8_t *)vs_default_d3d12,     sizeof(vs_default_d3d12));
-    Add("Default", bgfx::RendererType::OpenGL,      eShaderType::Vertex,    (uint8_t *)vs_default_glsl,      sizeof(vs_default_glsl));
-    Add("Default", bgfx::RendererType::Metal,       eShaderType::Vertex,    (uint8_t *)vs_default_metal,     sizeof(vs_default_metal));
-    Add("Default", bgfx::RendererType::Vulkan,      eShaderType::Vertex,    (uint8_t *)vs_default_vulkan,    sizeof(vs_default_vulkan));
-    // clang-format on
+    Add(SHADER_NAME, bgfx::RendererType::Direct3D9,   eShaderType::Vertex,    (uint8_t *)vs_gaussian_blur_d3d9,      sizeof(vs_gaussian_blur_d3d9));
+    Add(SHADER_NAME, bgfx::RendererType::Direct3D11,  eShaderType::Vertex,    (uint8_t *)vs_gaussian_blur_d3d11,     sizeof(vs_gaussian_blur_d3d11));
+    Add(SHADER_NAME, bgfx::RendererType::Direct3D12,  eShaderType::Vertex,    (uint8_t *)vs_gaussian_blur_d3d12,     sizeof(vs_gaussian_blur_d3d12));
+    Add(SHADER_NAME, bgfx::RendererType::OpenGL,      eShaderType::Vertex,    (uint8_t *)vs_gaussian_blur_glsl,      sizeof(vs_gaussian_blur_glsl));
+    Add(SHADER_NAME, bgfx::RendererType::Metal,       eShaderType::Vertex,    (uint8_t *)vs_gaussian_blur_metal,     sizeof(vs_gaussian_blur_metal));
+    Add(SHADER_NAME, bgfx::RendererType::Vulkan,      eShaderType::Vertex,    (uint8_t *)vs_gaussian_blur_vulkan,    sizeof(vs_gaussian_blur_vulkan));
 
     std::vector<uint8_t> v;
     for (auto &&i : m_shaders) {
@@ -102,7 +104,7 @@ void ShaderManager::InitializeSpriteShaders() {
         memory::SerializeIntoVector(i.code, v, i.code_len);
     }
 
-    FileSystem::WriteBinaryFile("default.shader", v.data(), v.size());
+    FileSystem::WriteBinaryFile(SHADER_NAME "-HZ.shader", v.data(), v.size());
     std::vector<uint8_t>().swap(v);
 #endif
 }

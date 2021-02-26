@@ -108,3 +108,7 @@ void RenderBatcher::Submit(Texture *texture, const glm::mat4 &transform, const g
 
     rbd->indexes += 6;
 }
+
+Texture *RenderBatcher::GetWhiteTexture() {
+    return rbd->whiteTexture;
+}

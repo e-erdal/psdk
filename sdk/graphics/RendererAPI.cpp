@@ -44,6 +44,14 @@ void RendererAPI::InitializeSettings() {
     bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
 }
 
+void RendererAPI::NewFrame() {
+    bgfx::touch(0);
+}
+
+void RendererAPI::Draw() {
+    bgfx::frame();
+}
+
 void RendererAPI::Clear(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
     bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, MAKE_RGBA(r, g, b, a), 1.0f, 0);
 }

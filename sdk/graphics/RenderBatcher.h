@@ -74,6 +74,8 @@ namespace RenderBatcher {
     void Submit(Texture *texture, const glm::mat4 &transform, const glm::mat4x2 &uvs, const glm::vec4 &color);
 
     inline void DrawRectangle(const glm::mat4 &transform, const glm::vec4 &color = { 1, 1, 1, 1 }) {
-        Submit(0, transform, g_defCoords, color);
+        Submit(0, transform, g_defCoords, color);    
     }
+
+    Texture *GetWhiteTexture();
 } // namespace RenderBatcher

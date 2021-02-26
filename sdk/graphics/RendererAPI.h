@@ -15,7 +15,7 @@
 #if CURRENT_API_OPENGL
 #include <glad/glad.h>
 #elif CURRENT_API_BGFX
-#include <bgfx/bgfx.h>
+#include <bgfx/bgfx.h> 
 #include <bimg/bimg.h>
 #endif
 
@@ -24,6 +24,8 @@ namespace RendererAPI {
     bool Initialize(Window *wapi);
     void InitializeSettings();
 
+    void NewFrame();
+    void Draw();
     void Clear(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
     void ResetView(int32_t width, int32_t height);
 } // namespace RendererAPI

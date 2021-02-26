@@ -14,7 +14,7 @@ enum class eShaderType : uint8_t { Fragment = 0, Vertex = 1 };
 class ShaderManager {
 public:
     void Add(const std::string &key, bgfx::RendererType::Enum renderer, eShaderType type, uint8_t *data, uint32_t dataLen);
-
+    void Add(const char *path, const char *name);
     bgfx::ProgramHandle LoadProgram(const std::string &key);
     bgfx::ShaderHandle LoadShader(const std::string &key, const eShaderType shaderType);
     void InitializeSpriteShaders();
