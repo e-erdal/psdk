@@ -9,10 +9,10 @@ EntityComponent::~EntityComponent() {
         OnRemove();
     }
 }
-EntityComponent::EntityComponent(std::string name) {
+EntityComponent::EntityComponent(const std::string &name) {
     SetName(name);
 }
-void EntityComponent::SetName(std::string name) {
+void EntityComponent::SetName(const std::string &name) {
     m_name = name;
 }
 

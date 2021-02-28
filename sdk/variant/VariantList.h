@@ -63,10 +63,10 @@ struct Variant {
     Variant &operator=(const uint32_t &param);
     uint32_t &GetUInt() const;
 
-    Variant &operator=(const Entity *&param);
+    Variant &operator=(const Entity *param);
     Entity *GetEntity() const;
 
-    Variant &operator=(const EntityComponent *&param);
+    Variant &operator=(const EntityComponent *param);
     EntityComponent *GetComponent() const;
 
     Variant &operator=(const int32_t &param);

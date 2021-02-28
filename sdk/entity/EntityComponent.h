@@ -16,9 +16,9 @@ class EntityComponent {
 public:
     EntityComponent();
     virtual ~EntityComponent();
-    EntityComponent(std::string name);
+    EntityComponent(const std::string &name);
 
-    void SetName(std::string name);
+    void SetName(const std::string &name);
 
     std::string GetName() {
         return m_name;
@@ -35,7 +35,7 @@ public:
         return &m_sharedDB;
     }
 
-    Variant *GetVar(std::string const &varName) {
+    Variant *GetVar(const std::string &varName) {
         return m_sharedDB.GetVar(varName);
     }
 

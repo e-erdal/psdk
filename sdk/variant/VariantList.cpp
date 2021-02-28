@@ -43,13 +43,13 @@ Variant &Variant::operator=(const uint32_t &param) {
     return *this;
 }
 
-Variant &Variant::operator=(const Entity *&param) {
-    Init(param, sizeof(param), VariantType::COMPONENT);
+Variant &Variant::operator=(const Entity *param) {
+    Init(param, sizeof(param), VariantType::ENTITY);
     return *this;
 }
 
-Variant &Variant::operator=(const EntityComponent *&param) {
-    Init(param, sizeof(param), VariantType::ENTITY);
+Variant &Variant::operator=(const EntityComponent *param) {
+    Init(param, sizeof(param), VariantType::COMPONENT);
     return *this;
 }
 
