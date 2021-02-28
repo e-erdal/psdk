@@ -6,9 +6,9 @@
 
 #include "app/App.h"
 
-ENTRY_POINT {
+ENTRY_POINT() {
     AppInfo cfg;
-    cfg.appName = "BareSDK";
+    cfg.appName = "BareBones";
     cfg.verMaj = 1;
     cfg.verMin = 0;
     cfg.verBuild = 0;
@@ -19,5 +19,6 @@ ENTRY_POINT {
 
     App *app = new App(cfg);
     app->Run();
+
     delete app;
 }

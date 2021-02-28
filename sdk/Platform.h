@@ -112,7 +112,7 @@
 #define ENTRY_POINT_ARGS HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow
 #endif
 
-#define ENTRY_POINT ENTRY_POINT_TYPE ENTRY_POINT_NAME(ENTRY_POINT_ARGS)
+#define ENTRY_POINT() ENTRY_POINT_TYPE ENTRY_POINT_NAME(ENTRY_POINT_ARGS)
 
 #endif
 /////////////////////////////

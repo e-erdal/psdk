@@ -66,7 +66,7 @@ private:
 
 private:
     static App *g_instance;
-    friend ENTRY_POINT;
+    friend ENTRY_POINT();
 };
 
 extern Window *GetWindow();
