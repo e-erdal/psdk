@@ -1,5 +1,5 @@
 # Features
-- Cross platform rendering API.
+- Cross platform rendering.
 - Sprite batching.
 
 # In-plan
