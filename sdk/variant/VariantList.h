@@ -26,6 +26,7 @@ enum class VariantType : uint8_t {
     COMPONENT,
     RECT,
     INT32,
+    MAT4X4,
 };
 
 #define PREPARE_TYPE(type)                 \
@@ -43,35 +44,47 @@ struct Variant {
 	Variant(float x, float y, float z)  { this->operator= (glm::vec3(x,y,z)); }
 	Variant(const glm::vec2 &v2)        { this->operator= (v2); }
 	Variant(const glm::vec3 &v3)        { this->operator= (v3); }
+	Variant(const glm::mat4 &m4)        { this->operator= (m4); }
 	Variant(Entity *entity)             { this->operator= (entity); }
 	Variant(EntityComponent *component) { this->operator= (component); }
-    // clang-format on
-
+    
     // types
     Variant &operator=(const float &param);
+    void Set(const float &param) { this->operator= (param); }
     float &GetFloat() const;
 
     Variant &operator=(const std::string &param);
+    void Set(const std::string &param) { this->operator= (param); }
     std::string GetString() const;
 
     Variant &operator=(const glm::vec2 &param);
+    void Set(const glm::vec2  &param) { this->operator= (param); }
     glm::vec2 &GetVec2() const;
 
     Variant &operator=(const glm::vec3 &param);
+    void Set(const glm::vec3  &param) { this->operator= (param); }
     glm::vec3 &GetVec3() const;
 
     Variant &operator=(const uint32_t &param);
+    void Set(const uint32_t &param) { this->operator= (param); }
     uint32_t &GetUInt() const;
 
     Variant &operator=(const Entity *param);
+    void Set(const Entity *param) { this->operator= (param); }
     Entity *GetEntity() const;
 
     Variant &operator=(const EntityComponent *param);
+    void Set(const EntityComponent *param) { this->operator= (param); }
     EntityComponent *GetComponent() const;
 
     Variant &operator=(const int32_t &param);
+    void Set(const int32_t &param) { this->operator= (param); }
     int32_t &GetInt() const;
 
+    Variant &operator=(const glm::mat4 &param);
+    void Set(const glm::mat4 &param) { this->operator= (param); }
+    glm::mat4 &GetMat4() const;
+    // clang-format on
     // it will free the memory and erase all info about node
     void Clear();
 

@@ -77,5 +77,9 @@ namespace RenderBatcher {
         Submit(0, transform, g_defCoords, color);    
     }
 
+    inline void DrawRectangle(Texture *texture, const glm::mat4 &transform, const glm::vec4 &color = { 1, 1, 1, 1 }) {
+        Submit(texture, transform, g_defCoords, color);    
+    }
+
     Texture *GetWhiteTexture();
 } // namespace RenderBatcher

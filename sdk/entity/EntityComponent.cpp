@@ -24,6 +24,6 @@ void EntityComponent::OnRemove() {
     FunctionObject *fun = GetShared()->GetFunctionIfExists("OnDelete");
     if (fun) {
         VariantList v(this);
-        fun->fun(&v);
+        fun->sig(&v);
     }
 }

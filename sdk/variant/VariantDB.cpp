@@ -1,14 +1,14 @@
 #include "VariantDB.h"
 
 FunctionObject *VariantDB::GetFunction(const std::string &name) {
-    FunctionObject *fun = GetFunctionIfExists(name);
+    FunctionObject *sig = GetFunctionIfExists(name);
 
-    if (!fun) {
-        fun = new (FunctionObject);
-        m_functionData[name] = fun;
+    if (!sig) {
+        sig = new (FunctionObject);
+        m_functionData[name] = sig;
     }
 
-    return fun;
+    return sig;
 }
 
 FunctionObject *VariantDB::GetFunctionIfExists(const std::string &name) {
@@ -23,7 +23,7 @@ FunctionObject *VariantDB::GetFunctionIfExists(const std::string &name) {
 void VariantDB::CallFunctionIfExists(const std::string &name, VariantList *vlist) {
     FunctionObject *f = GetFunctionIfExists(name);
     if (f) {
-        f->fun(vlist);
+        f->sig(vlist);
     }
 }
 

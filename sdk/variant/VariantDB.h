@@ -12,13 +12,12 @@
 
 #include <functional>
 
-struct FunctionObject {
-    std::function<void(VariantList *)> fun;
+using namespace std::placeholders;
 
-    template <class Fun>
-    void Bind(Fun &f) {
-        fun = f;
-    }
+using FunctionSig_t = std::function<void(VariantList *)>;
+
+struct FunctionObject {
+    FunctionSig_t sig;
 };
 
 typedef std::unordered_map<std::string, Variant *> DataList_t;

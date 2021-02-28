@@ -58,6 +58,11 @@ Variant &Variant::operator=(const int32_t &param) {
     return *this;
 }
 
+Variant &Variant::operator=(const glm::mat4 &param) {
+    Init(param, sizeof(param), VariantType::MAT4X4);
+    return *this;
+}
+
 //////////////////////////////////////////////////////////////////////
 
 float &Variant::GetFloat() const {
@@ -90,6 +95,10 @@ uint32_t &Variant::GetUInt() const {
 
 int32_t &Variant::GetInt() const {
     return *(int32_t *)data;
+}
+
+glm::mat4 &Variant::GetMat4() const {
+    return *(glm::mat4 *)data;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -194,19 +203,19 @@ void VariantList::SerializeFromMem(uint8_t *data, uint32_t dataSize) {
                 break;
             }
 
-                // case VariantType::VECTOR2: {
-                //     math::vec2 var{};
-                //     memory::Serialize(data, &var);
-                //     variants[idx] = var;
-                //     break;
-                // }
+            case VariantType::VECTOR2: {
+                glm::vec2 var{};
+                memory::Serialize(data, &var);
+                variants[idx] = var;
+                break;
+            }
 
-                // case VariantType::VECTOR3: {
-                //     math::vec3 var{};
-                //     memory::Serialize(data, &var);
-                //     variants[idx] = var;
-                //     break;
-                // }
+            case VariantType::VECTOR3: {
+                glm::vec3 var{};
+                memory::Serialize(data, &var);
+                variants[idx] = var;
+                break;
+            }
 
             case VariantType::UINT32: {
                 uint32_t var = 0;
@@ -224,6 +233,13 @@ void VariantList::SerializeFromMem(uint8_t *data, uint32_t dataSize) {
 
             case VariantType::INT32: {
                 int32_t var = 0;
+                memory::Serialize(data, &var);
+                variants[idx] = var;
+                break;
+            }
+
+            case VariantType::MAT4X4: {
+                glm::mat4 var{};
                 memory::Serialize(data, &var);
                 variants[idx] = var;
                 break;

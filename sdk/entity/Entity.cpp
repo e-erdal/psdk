@@ -14,8 +14,12 @@ Entity::~Entity() {
     RemoveAllComponents();
 }
 
+void asd(VariantList *v) {
+
+}
+
 void Entity::Initialize() {
-    GetFunction("OnDelete")->Bind(Entity::OnDelete);
+    GetFunction("OnDelete")->sig = std::bind(&Entity::OnDelete, this, _1);
 }
 
 Entity *Entity::AddEntity(Entity *entity) {
@@ -52,4 +56,8 @@ void Entity::RemoveAllComponents() {
     }
 
     m_components.clear();
+}
+
+void Entity::OnDelete(VariantList *vList) {
+
 }
