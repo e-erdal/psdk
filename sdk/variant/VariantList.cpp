@@ -1,5 +1,8 @@
 #include "VariantList.h"
 
+#include "entity/Entity.h"
+#include "entity/EntityComponent.h"
+
 #include "utils/Memory.h"
 
 template <typename T>
@@ -16,31 +19,6 @@ Variant &Variant::operator=(const float &param) {
     return *this;
 }
 
-Variant &Variant::operator=(const uint32_t &param) {
-    Init(param, sizeof(param), VariantType::UINT32);
-    return *this;
-}
-
-// Variant &Variant::operator=(const math::vec2 &param) {
-//     Init(param, sizeof(param), VariantType::VECTOR2);
-//     return *this;
-// }
-
-// Variant &Variant::operator=(const math::vec3 &param) {
-//     Init(param, sizeof(param), VariantType::VECTOR3);
-//     return *this;
-// }
-
-// Variant &Variant::operator=(const math::rect &param) {
-//     Init(param, sizeof(param), VariantType::RECT);
-//     return *this;
-// }
-
-Variant &Variant::operator=(const int32_t &param) {
-    Init(param, sizeof(param), VariantType::INT32);
-    return *this;
-}
-
 Variant &Variant::operator=(const std::string &param) {
     data = (uint8_t *)realloc(data, param.length());
     memcpy(data, param.c_str(), param.length());
@@ -50,29 +28,65 @@ Variant &Variant::operator=(const std::string &param) {
     return *this;
 }
 
+Variant &Variant::operator=(const glm::vec2 &param) {
+    Init(param, sizeof(param), VariantType::VECTOR2);
+    return *this;
+}
+
+Variant &Variant::operator=(const glm::vec3 &param) {
+    Init(param, sizeof(param), VariantType::VECTOR3);
+    return *this;
+}
+
+Variant &Variant::operator=(const uint32_t &param) {
+    Init(param, sizeof(param), VariantType::UINT32);
+    return *this;
+}
+
+Variant &Variant::operator=(const Entity *&param) {
+    Init(param, sizeof(param), VariantType::COMPONENT);
+    return *this;
+}
+
+Variant &Variant::operator=(const EntityComponent *&param) {
+    Init(param, sizeof(param), VariantType::ENTITY);
+    return *this;
+}
+
+Variant &Variant::operator=(const int32_t &param) {
+    Init(param, sizeof(param), VariantType::INT32);
+    return *this;
+}
+
+//////////////////////////////////////////////////////////////////////
+
 float &Variant::GetFloat() const {
     return *(float *)data;
 }
 
-std::string Variant::Get() const {
+std::string Variant::GetString() const {
     return std::string((const char *)data, size);
 }
 
-// Variant::operator const math::vec2 &() {
-//     return *(math::vec2 *)data;
-// }
+glm::vec2 &Variant::GetVec2() const {
+    return *(glm::vec2 *)data;
+}
 
-// Variant::operator const math::vec3 &() {
-//     return *(math::vec3 *)data;
-// }
+glm::vec3 &Variant::GetVec3() const {
+    return *(glm::vec3 *)data;
+}
+
+Entity *Variant::GetEntity() const {
+    return ((Entity *)data);
+}
+
+EntityComponent *Variant::GetComponent() const {
+    return ((EntityComponent *)data);
+}
 
 uint32_t &Variant::GetUInt() const {
     return *(uint32_t *)data;
 }
-
-// Variant::operator const math::rect &() {
-//     return *(math::rect *)data;
-// }
 
 int32_t &Variant::GetInt() const {
     return *(int32_t *)data;

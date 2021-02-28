@@ -10,7 +10,10 @@
 
 #include <string>
 
-#define VARIANT_COUNT 10
+#define VARIANT_COUNT 6
+
+class Entity;
+class EntityComponent;
 
 enum class VariantType : uint8_t {
     NONE,
@@ -30,19 +33,44 @@ enum class VariantType : uint8_t {
     type &Get() const
 
 struct Variant {
+    // clang-format off
+    Variant() {}
+    Variant(uint32_t var)               { this->operator= (var); }
+	Variant(int32_t var)                { this->operator= (var); }
+	Variant(float var)                  { this->operator= (var); }
+	Variant(const std::string &var)     { this->operator= (var); }
+	Variant(float x, float y)           { this->operator= (glm::vec2(x,y)); }
+	Variant(float x, float y, float z)  { this->operator= (glm::vec3(x,y,z)); }
+	Variant(const glm::vec2 &v2)        { this->operator= (v2); }
+	Variant(const glm::vec3 &v3)        { this->operator= (v3); }
+	Variant(Entity *entity)             { this->operator= (entity); }
+	Variant(EntityComponent *component) { this->operator= (component); }
+    // clang-format on
+
     // types
     Variant &operator=(const float &param);
     float &GetFloat() const;
 
     Variant &operator=(const std::string &param);
-    std::string Get() const;
-    //PREPARE_TYPE(math::vec2);
-    //PREPARE_TYPE(math::vec3);
+    std::string GetString() const;
+
+    Variant &operator=(const glm::vec2 &param);
+    glm::vec2 &GetVec2() const;
+
+    Variant &operator=(const glm::vec3 &param);
+    glm::vec3 &GetVec3() const;
+
     Variant &operator=(const uint32_t &param);
     uint32_t &GetUInt() const;
+
+    Variant &operator=(const Entity *&param);
+    Entity *GetEntity() const;
+
+    Variant &operator=(const EntityComponent *&param);
+    EntityComponent *GetComponent() const;
+
     Variant &operator=(const int32_t &param);
     int32_t &GetInt() const;
-    //PREPARE_TYPE(math::rect);
 
     // it will free the memory and erase all info about node
     void Clear();
@@ -64,6 +92,17 @@ struct Variant {
 
 class VariantList {
 public:
+    // clang-format off
+    VariantList() {}
+    VariantList(Variant v0) {variants[0] = v0;}
+	VariantList(Variant v0, Variant v1) {variants[0] = v0; variants[1] = v1;}
+	VariantList(Variant v0, Variant v1, Variant v2) {variants[0] = v0; variants[1] = v1; variants[2] = v2;}
+	VariantList(Variant v0, Variant v1, Variant v2, Variant v3) {variants[0] = v0; variants[1] = v1; variants[2] = v2; variants[3] = v3;}
+	VariantList(Variant v0, Variant v1, Variant v2, Variant v3, Variant v4) {variants[0] = v0; variants[1] = v1; variants[2] = v2; variants[3] = v3; variants[4] = v4;}
+	VariantList(Variant v0, Variant v1, Variant v2, Variant v3, Variant v4, Variant v5) {variants[0] = v0; variants[1] = v1; variants[2] = v2; variants[3] = v3; variants[4] = v4;  variants[5] = v5;}
+
+    // clang-format on
+
     Variant &operator[](int idx) {
         return variants[idx];
     }

@@ -35,6 +35,15 @@ public:
     FunctionObject *GetFunction(const std::string &name);
     FunctionObject *GetFunctionIfExists(const std::string &name);
 
+    void CallFunctionIfExists(const std::string &name, VariantList *vlist);
+
+    Variant *GetVar(const std::string &name);
+    Variant *GetVarIfExists(const std::string &name);
+    Variant *GetVarWithDefault(const std::string &name, const Variant &vDef);
+
+    int DeleteVarsStartingWith(const std::string &deleteStr);
+    int DeleteVar(const std::string &name);
+
 private:
     DataList_t m_data;
     FunctionList_t m_functionData;

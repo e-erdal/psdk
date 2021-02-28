@@ -1,9 +1,9 @@
-// 
+//
 // Created on February 12th 2021 by loanselot1.
-// 
+//
 // Purpose: Helper functions to read and write memory cleaner.
 //          This is actually implemented by ness back in 2019?
-// 
+//
 
 #pragma once
 
@@ -14,8 +14,37 @@
 #include <string>
 #include <vector>
 
-namespace memory {
+#define MALLOC(type, ...) (type *)(malloc(sizeof(type) __VA_ARGS__))
 
+namespace memory {
+    // v2
+    template <typename T>
+    T Get(uint8_t *mem, uintptr_t &cur) {
+        auto data = *(T *)(mem + cur);
+        cur += sizeof(T);
+        return data;
+    }
+
+    static std::string GetString16(uint8_t *&data, std::string *str) {
+        str->assign((const char *)(data + 2), *(uint16_t *)data);
+        data += 2 + str->length();
+    }
+
+    // WARNING: Unstable as fuck.
+    template <typename T>
+    void Append(T *val, uint8_t *mem, uint32_t &currentSize) {
+        uint8_t *newMem = (uint8_t *)malloc(currentSize + sizeof(val)); // allocate memory we need
+        memset(newMem, 0, currentSize + sizeof(val));                   // set it to zero
+
+        memcpy(newMem, mem, currentSize);               // copy old memory first
+        memcpy(newMem + currentSize, val, sizeof(val)); // now append the memory
+        currentSize += sizeof(val);                     // memory data is now changed
+
+        free(mem);    // clean up old one
+        mem = newMem; // this is now new memory
+    }
+
+    // v1
     // from data to value
     template <typename T>
     static void Serialize(uint8_t *&data, T *val) {
@@ -86,7 +115,7 @@ namespace memory {
         for (int i = 0; i < data_len; i++) data[i] ^= key[i % key.length()];
     }
 
-    static uint32_t HashString(uint8_t *str, int len) {
+    static uint32_t crc16(uint8_t *str, int len) {
         if (!str)
             return 0;
 
