@@ -29,13 +29,13 @@ public:
 private:
     void OnRender(VariantList *vList);
 
-    glm::vec2 m_pos2d;
-    glm::vec2 m_size2d;
-    glm::vec2 m_scale2d;
+    glm::vec2 *m_pos2d;
+    glm::vec2 *m_size2d;
+    glm::vec2 *m_scale2d;
 
-    glm::vec3 m_color;
+    glm::vec3 *m_color;
 
-    glm::mat4 m_transform;
+    glm::mat4 *m_transform;
 
-    Texture *m_texture;
+    Texture *m_texture = 0;
 };

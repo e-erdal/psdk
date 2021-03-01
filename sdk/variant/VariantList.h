@@ -51,39 +51,39 @@ struct Variant {
     // types
     Variant &operator=(const float &param);
     void Set(const float &param) { this->operator= (param); }
-    float &GetFloat() const;
+    float &GetFloat();
 
     Variant &operator=(const std::string &param);
     void Set(const std::string &param) { this->operator= (param); }
-    std::string GetString() const;
+    std::string GetString();
 
     Variant &operator=(const glm::vec2 &param);
     void Set(const glm::vec2  &param) { this->operator= (param); }
-    glm::vec2 &GetVec2() const;
+    glm::vec2 &GetVec2();
 
     Variant &operator=(const glm::vec3 &param);
     void Set(const glm::vec3  &param) { this->operator= (param); }
-    glm::vec3 &GetVec3() const;
+    glm::vec3 &GetVec3();
 
     Variant &operator=(const uint32_t &param);
     void Set(const uint32_t &param) { this->operator= (param); }
-    uint32_t &GetUInt() const;
+    uint32_t &GetUInt();
 
     Variant &operator=(const Entity *param);
     void Set(const Entity *param) { this->operator= (param); }
-    Entity *GetEntity() const;
+    Entity *GetEntity();
 
     Variant &operator=(const EntityComponent *param);
     void Set(const EntityComponent *param) { this->operator= (param); }
-    EntityComponent *GetComponent() const;
+    EntityComponent *GetComponent();
 
     Variant &operator=(const int32_t &param);
     void Set(const int32_t &param) { this->operator= (param); }
-    int32_t &GetInt() const;
+    int32_t &GetInt();
 
     Variant &operator=(const glm::mat4 &param);
     void Set(const glm::mat4 &param) { this->operator= (param); }
-    glm::mat4 &GetMat4() const;
+    glm::mat4 &GetMat4();
     // clang-format on
     // it will free the memory and erase all info about node
     void Clear();

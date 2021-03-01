@@ -14,10 +14,6 @@ Entity::~Entity() {
     RemoveAllComponents();
 }
 
-void asd(VariantList *v) {
-
-}
-
 void Entity::Initialize() {
     GetFunction("OnDelete")->sig = std::bind(&Entity::OnDelete, this, _1);
 }

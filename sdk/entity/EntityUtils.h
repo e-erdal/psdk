@@ -12,3 +12,5 @@
 #include "RectRenderComponent.h"
 
 extern Entity *CreateRectEntity(Entity *parent, const glm::vec2 &pos, const glm::vec2 &size);
+
+extern void RenderAllEntities(Entity *parent);

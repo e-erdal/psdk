@@ -8,6 +8,8 @@
 
 #include "pch.h"
 
+#include "entity/Entity.h"
+
 #include "graphics/ShaderManager.h"
 #include "graphics/camera/Camera.h"
 
@@ -53,6 +55,10 @@ public:
         return m_inputMan;
     }
 
+    Entity *GetEntityRoot() {
+        return m_entityRoot;
+    }
+
 private:
     void Run();
 
@@ -61,6 +67,8 @@ private:
     ShaderManager *m_shaderMan;
     Camera *m_camera;
     InputManager *m_inputMan;
+
+    Entity *m_entityRoot = 0;
 
     float m_lastDelta = 0.f;
 
@@ -73,3 +81,4 @@ extern Window *GetWindow();
 extern ShaderManager *GetShaderManager();
 extern Camera *GetCamera();
 extern InputManager *GetInputManager();
+extern Entity *GetEntityRoot();

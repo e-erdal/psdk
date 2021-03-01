@@ -52,6 +52,10 @@ public:
         return m_sharedDB.GetFunction(name);
     }
 
+    void CallFunction(const std::string &name, VariantList *vList) {
+        return m_sharedDB.CallFunctionIfExists(name, vList);
+    }
+
     Entity *GetParent() {
         return m_parent;
     }

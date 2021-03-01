@@ -16,8 +16,8 @@ void EntityComponent::SetName(const std::string &name) {
     m_name = name;
 }
 
-void EntityComponent::OnAdd(Entity *pEnt) {
-    m_parent = pEnt;
+void EntityComponent::OnAdd(Entity *entity) {
+    m_parent = entity;
 }
 
 void EntityComponent::OnRemove() {

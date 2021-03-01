@@ -65,39 +65,66 @@ Variant &Variant::operator=(const glm::mat4 &param) {
 
 //////////////////////////////////////////////////////////////////////
 
-float &Variant::GetFloat() const {
+float &Variant::GetFloat() {
+    if (type == VariantType::NONE)
+        Set(0.f);
+
     return *(float *)data;
 }
 
-std::string Variant::GetString() const {
+std::string Variant::GetString() {
+    if (type == VariantType::NONE)
+        Set("");
+
     return std::string((const char *)data, size);
 }
 
-glm::vec2 &Variant::GetVec2() const {
+glm::vec2 &Variant::GetVec2() {
+    if (type == VariantType::NONE)
+        Set(glm::vec2{ 0.f, 0.f });
+
     return *(glm::vec2 *)data;
 }
 
-glm::vec3 &Variant::GetVec3() const {
+glm::vec3 &Variant::GetVec3() {
+    if (type == VariantType::NONE)
+        Set(glm::vec3{ 0.f, 0.f, 0.f });
+
     return *(glm::vec3 *)data;
 }
 
-Entity *Variant::GetEntity() const {
+Entity *Variant::GetEntity() {
+    if (type == VariantType::NONE)
+        return 0;
+
     return ((Entity *)data);
 }
 
-EntityComponent *Variant::GetComponent() const {
+EntityComponent *Variant::GetComponent() {
+    if (type == VariantType::NONE)
+        return 0;
+
     return ((EntityComponent *)data);
 }
 
-uint32_t &Variant::GetUInt() const {
+uint32_t &Variant::GetUInt() {
+    if (type == VariantType::NONE)
+        Set(0u);
+
     return *(uint32_t *)data;
 }
 
-int32_t &Variant::GetInt() const {
+int32_t &Variant::GetInt() {
+    if (type == VariantType::NONE)
+        Set(0i32);
+
     return *(int32_t *)data;
 }
 
-glm::mat4 &Variant::GetMat4() const {
+glm::mat4 &Variant::GetMat4() {
+    if (type == VariantType::NONE)
+        Set(glm::mat4{ 0.f });
+
     return *(glm::mat4 *)data;
 }
 

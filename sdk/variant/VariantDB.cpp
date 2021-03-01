@@ -31,7 +31,7 @@ Variant *VariantDB::GetVar(const std::string &name) {
     Variant *v = GetVarIfExists(name);
 
     if (!v) {
-        v = new (Variant);
+        v = new Variant;
         m_data[name] = v;
     }
 
@@ -39,13 +39,13 @@ Variant *VariantDB::GetVar(const std::string &name) {
 }
 
 Variant *VariantDB::GetVarIfExists(const std::string &name) {
-    DataList_t::iterator itor = m_data.find(name);
+    auto element = m_data.find(name);
 
-    if (itor != m_data.end()) {
-        return &((*itor->second));
+    if (element != m_data.end()) {
+        return element->second;
     }
 
-    return NULL;
+    return 0;
 }
 
 Variant *VariantDB::GetVarWithDefault(const std::string &name, const Variant &vDef) {
