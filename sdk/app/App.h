@@ -9,6 +9,7 @@
 #include "pch.h"
 
 #include "entity/Entity.h"
+#include "entity/EntityUtils.h"
 
 #include "graphics/ShaderManager.h"
 #include "graphics/camera/Camera.h"
@@ -29,8 +30,14 @@ struct AppInfo {
 
 class App {
 public:
-    App(const AppInfo &info);
+    App(){};
     virtual ~App();
+
+    void Setup(const AppInfo &info);
+
+    virtual bool Init() = 0;
+    virtual void Kill() = 0;
+    virtual void Update() = 0;
 
     void Close();
 

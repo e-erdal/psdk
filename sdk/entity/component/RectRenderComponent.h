@@ -8,7 +8,7 @@
 
 #include "pch.h"
 
-#include "Entity.h"
+#include "entity/Entity.h"
 #include "EntityComponent.h"
 
 #include "graphics/Texture.h"

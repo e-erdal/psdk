@@ -33,3 +33,19 @@ void RenderAllEntities(Entity *parent) {
         itor++;
     }
 }
+
+void UpdateAllEntities(Entity *parent, float deltaTime) {
+    VariantList v;
+    v[0] = deltaTime;
+
+    parent->CallFunction("OnUpdate", &v);
+
+    EntityList *childs = parent->GetChildren();
+
+    auto &itor = childs->begin();
+
+    while (itor != childs->end()) {
+        UpdateAllEntities(*itor, deltaTime);
+        itor++;
+    }
+}

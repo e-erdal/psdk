@@ -1,7 +1,7 @@
 #include "VariantList.h"
 
 #include "entity/Entity.h"
-#include "entity/EntityComponent.h"
+#include "entity/component/EntityComponent.h"
 
 #include "utils/Memory.h"
 

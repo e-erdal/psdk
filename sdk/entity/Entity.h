@@ -8,7 +8,7 @@
 
 #include "pch.h"
 
-#include "EntityComponent.h"
+#include "component/EntityComponent.h"
 
 class Entity;
 
@@ -33,7 +33,7 @@ public:
     EntityComponent *AddComponent(EntityComponent *component);
 
     void RemoveAllEntities();
-	void RemoveAllComponents();
+    void RemoveAllComponents();
 
 public:
     VariantDB *GetShared() {

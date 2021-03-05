@@ -4,7 +4,7 @@
 
 #include "pch.h"
 
-#include "app/App.h"
+#include "GameApp.h"
 
 ENTRY_POINT() {
     AppInfo cfg;
@@ -17,7 +17,10 @@ ENTRY_POINT() {
     cfg.windowRes = { 1024, 768 };
     cfg.windowFlags = eWindowFlags::NONE;
 
-    App *app = new App(cfg);
+    GameApp *app = new GameApp();
+    app->Setup(cfg);
+    app->Init();
+    
     app->Run();
 
     delete app;

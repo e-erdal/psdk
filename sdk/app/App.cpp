@@ -9,7 +9,7 @@
 
 App *App::g_instance = 0;
 
-App::App(const AppInfo &info) {
+void App::Setup(const AppInfo &info) {
     g_instance = this;
 
     logger::Clear();
@@ -24,9 +24,6 @@ App::App(const AppInfo &info) {
     m_camera = new Camera(0, 0, m_window->Width(), m_window->Height());
 
     m_entityRoot = new Entity();
-    CreateRectEntity(m_entityRoot, { 100.f, 100.f }, { 100.f, 100.f });
-    CreateRectEntity(m_entityRoot, { 200.f, 200.f }, { 100.f, 100.f });
-    
 }
 
 App::~App() {
@@ -39,12 +36,15 @@ void App::Run() {
         m_camera->CalculateTransformation();
 
         RenderBatcher::NewFrame();
-        
+
         RenderAllEntities(GetEntityRoot());
 
         RenderBatcher::EndFrame();
 
         RendererAPI::Draw();
+
+        Update();
+        UpdateAllEntities(GetEntityRoot(), 0.f);
 
         m_window->Poll();
         m_inputMan->Update(); // this shit has to stay on bottom, no matter what
