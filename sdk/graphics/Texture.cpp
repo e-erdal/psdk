@@ -36,6 +36,18 @@ Texture::Texture(const std::string &path, bool AA) {
     stbi_image_free(data);
 }
 
+Texture::Texture(uint32_t width, uint32_t height, void *data, bool AA, uint8_t pitch) {
+    m_width = width;
+    m_height = height;
+
+    auto memory = bgfx::copy(data, (width * height) * pitch);
+    
+    m_handle = bgfx::createTexture2D((uint16_t)width, (uint16_t)height, false, 1, bgfx::TextureFormat::RGBA8, ApplyTextureFilter(AA), memory);
+
+    if (!bgfx::isValid(m_handle))
+        DEBUG_LOG_ERROR("Texture is invalid!");
+}
+
 Texture::~Texture() {
     bgfx::destroy(m_handle);
 }

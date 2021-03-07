@@ -13,6 +13,7 @@ public:
     // AA stands for Anti-Aliasing
     Texture(uint32_t width, uint32_t height, bool AA = false);
     Texture(const std::string &path, bool AA = false);
+    Texture(uint32_t width, uint32_t height, void *data, bool AA = false, uint8_t pitch = 4);
     ~Texture();
 
     uint32_t GetWidth() const {

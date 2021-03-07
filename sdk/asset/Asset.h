@@ -6,6 +6,8 @@
 
 #include "pch.h"
 
+#include "AssetHeader.h"
+
 class Asset {
 public:
     Asset(){};
@@ -26,7 +28,10 @@ public:
         return m_dataSize;
     }
 
-private:
+    virtual const AssetType GetAssetType() = 0;
+
+    AssetType m_assetType = AssetType::UNKOWNN;
+
     uint8_t *m_data = 0;
     uint32_t m_dataSize = 0;
 };
