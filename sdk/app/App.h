@@ -1,8 +1,6 @@
-//
-// Created on February 13th 2021 by loanselot1.
-//
-// Purpose: Entrypoint of everything about SDK.
-//
+// 
+// Created on February 28th 2021 by loanselot1.
+// 
 
 #pragma once
 
